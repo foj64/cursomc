@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.foj.cursomc.domain.Categoria;
 import com.foj.cursomc.repositories.CategoriaRepository;
+import com.foj.cursomc.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
