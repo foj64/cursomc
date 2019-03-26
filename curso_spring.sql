@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 25-Mar-2019 às 22:37
--- Versão do servidor: 5.6.17
--- PHP Version: 5.5.12
+-- Host: 127.0.0.1:3306
+-- Generation Time: 25-Mar-2019 às 23:04
+-- Versão do servidor: 5.7.21
+-- PHP Version: 5.6.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `curso_spring`
@@ -26,11 +28,12 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `categoria`
 --
 
+DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `categoria`
@@ -51,13 +54,14 @@ INSERT INTO `categoria` (`id`, `nome`) VALUES
 -- Estrutura da tabela `cidade`
 --
 
+DROP TABLE IF EXISTS `cidade`;
 CREATE TABLE IF NOT EXISTS `cidade` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   `estado_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKkworrwk40xj58kevvh3evi500` (`estado_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `cidade`
@@ -74,6 +78,7 @@ INSERT INTO `cidade` (`id`, `nome`, `estado_id`) VALUES
 -- Estrutura da tabela `cliente`
 --
 
+DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE IF NOT EXISTS `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cpf_ou_cnpj` varchar(255) DEFAULT NULL,
@@ -83,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `tipo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_cmxo70m08n43599l3h0h07cc6` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `cliente`
@@ -98,6 +103,7 @@ INSERT INTO `cliente` (`id`, `cpf_ou_cnpj`, `email`, `nome`, `senha`, `tipo`) VA
 -- Estrutura da tabela `endereco`
 --
 
+DROP TABLE IF EXISTS `endereco`;
 CREATE TABLE IF NOT EXISTS `endereco` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bairro` varchar(255) DEFAULT NULL,
@@ -110,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `endereco` (
   PRIMARY KEY (`id`),
   KEY `FK8b1kcb3wucapb8dejshyn5fsx` (`cidade_id`),
   KEY `FK8s7ivtl4foyhrfam9xqom73n9` (`cliente_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `endereco`
@@ -126,11 +132,12 @@ INSERT INTO `endereco` (`id`, `bairro`, `cep`, `complemento`, `logradouro`, `num
 -- Estrutura da tabela `estado`
 --
 
+DROP TABLE IF EXISTS `estado`;
 CREATE TABLE IF NOT EXISTS `estado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `estado`
@@ -146,6 +153,7 @@ INSERT INTO `estado` (`id`, `nome`) VALUES
 -- Estrutura da tabela `item_pedido`
 --
 
+DROP TABLE IF EXISTS `item_pedido`;
 CREATE TABLE IF NOT EXISTS `item_pedido` (
   `desconto` double DEFAULT NULL,
   `preco` double DEFAULT NULL,
@@ -171,6 +179,7 @@ INSERT INTO `item_pedido` (`desconto`, `preco`, `quantidade`, `pedido_id`, `prod
 -- Estrutura da tabela `pagamento`
 --
 
+DROP TABLE IF EXISTS `pagamento`;
 CREATE TABLE IF NOT EXISTS `pagamento` (
   `pedido_id` int(11) NOT NULL,
   `estado` int(11) DEFAULT NULL,
@@ -191,6 +200,7 @@ INSERT INTO `pagamento` (`pedido_id`, `estado`) VALUES
 -- Estrutura da tabela `pagamento_com_boleto`
 --
 
+DROP TABLE IF EXISTS `pagamento_com_boleto`;
 CREATE TABLE IF NOT EXISTS `pagamento_com_boleto` (
   `data_pagamento` datetime DEFAULT NULL,
   `data_vencimento` datetime DEFAULT NULL,
@@ -211,6 +221,7 @@ INSERT INTO `pagamento_com_boleto` (`data_pagamento`, `data_vencimento`, `pedido
 -- Estrutura da tabela `pagamento_com_cartao`
 --
 
+DROP TABLE IF EXISTS `pagamento_com_cartao`;
 CREATE TABLE IF NOT EXISTS `pagamento_com_cartao` (
   `numero_de_parcelas` int(11) DEFAULT NULL,
   `pedido_id` int(11) NOT NULL,
@@ -230,6 +241,7 @@ INSERT INTO `pagamento_com_cartao` (`numero_de_parcelas`, `pedido_id`) VALUES
 -- Estrutura da tabela `pedido`
 --
 
+DROP TABLE IF EXISTS `pedido`;
 CREATE TABLE IF NOT EXISTS `pedido` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `instante` datetime DEFAULT NULL,
@@ -238,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
   PRIMARY KEY (`id`),
   KEY `FK30s8j2ktpay6of18lbyqn3632` (`cliente_id`),
   KEY `FK1fihyy2fnocpuwc74674qmfkv` (`endereco_de_entrega_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `pedido`
@@ -254,6 +266,7 @@ INSERT INTO `pedido` (`id`, `instante`, `cliente_id`, `endereco_de_entrega_id`) 
 -- Estrutura da tabela `perfis`
 --
 
+DROP TABLE IF EXISTS `perfis`;
 CREATE TABLE IF NOT EXISTS `perfis` (
   `cliente_id` int(11) NOT NULL,
   `perfis` int(11) DEFAULT NULL,
@@ -266,12 +279,13 @@ CREATE TABLE IF NOT EXISTS `perfis` (
 -- Estrutura da tabela `produto`
 --
 
+DROP TABLE IF EXISTS `produto`;
 CREATE TABLE IF NOT EXISTS `produto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   `preco` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `produto`
@@ -296,6 +310,7 @@ INSERT INTO `produto` (`id`, `nome`, `preco`) VALUES
 -- Estrutura da tabela `produto_categoria`
 --
 
+DROP TABLE IF EXISTS `produto_categoria`;
 CREATE TABLE IF NOT EXISTS `produto_categoria` (
   `produto_id` int(11) NOT NULL,
   `categoria_id` int(11) NOT NULL,
@@ -330,6 +345,7 @@ INSERT INTO `produto_categoria` (`produto_id`, `categoria_id`) VALUES
 -- Estrutura da tabela `telefone`
 --
 
+DROP TABLE IF EXISTS `telefone`;
 CREATE TABLE IF NOT EXISTS `telefone` (
   `cliente_id` int(11) NOT NULL,
   `telefones` varchar(255) DEFAULT NULL,
@@ -343,6 +359,7 @@ CREATE TABLE IF NOT EXISTS `telefone` (
 INSERT INTO `telefone` (`cliente_id`, `telefones`) VALUES
 (1, '27363323'),
 (1, '93838393');
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
